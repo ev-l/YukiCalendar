@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">YukiCalendar</string>
+    <string name="no_calendars_found">No Calendars Found</string>
 </resources>
