@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">YukiCalendar</string>
     <string name="no_calendars_found">No Calendars Found</string>
+    <string name="button_send">Send</string>
+    <string name="second_activity">This is second activity</string>
 </resources>
