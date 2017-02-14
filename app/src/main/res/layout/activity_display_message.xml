@@ -10,9 +10,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.yukicalendar.DisplayMessageActivity">
 
-    <TextView
+
+    <EditText android:id="@+id/edit_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/second_activity"/>
+        android:hint="@string/edit_message" />
 
 </RelativeLayout>
