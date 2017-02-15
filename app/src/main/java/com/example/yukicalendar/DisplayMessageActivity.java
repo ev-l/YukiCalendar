@@ -1,14 +1,11 @@
 package com.example.yukicalendar;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 
 public class DisplayMessageActivity extends AppCompatActivity {
 
@@ -21,24 +18,18 @@ public class DisplayMessageActivity extends AppCompatActivity {
         myEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    Log.d("myText", s);
-
+                Log.d("BeforeTextChanged", s.toString());
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                Log.d("OnTextChanged", s.toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                Log.d("AfterTextChanged", s.toString());
             }
         });
-
-
-        }
-
     }
 }
