@@ -19,15 +19,10 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView calendarNameView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        calendarNameView = (TextView) findViewById(R.id.calendar_name);
-        GetCalendarList calendarList = new GetCalendarList();
-        calendarList.execute();
     }
 
     /** Called when the user clicks the Send button */
@@ -79,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(List<String> calendarNames) {
             super.onPostExecute(calendarNames);
             if (!calendarNames.isEmpty()) {
-                calendarNameView.setText(calendarNames.get(0)); // Setting the name of the first calendar in the list
+//                calendarNameView.setText(calendarNames.get(0)); // Setting the name of the first calendar in the list
             } else {
-                calendarNameView.setText(getString(R.string.no_calendars_found)); // Setting the name of the first calendar in the list
+//                calendarNameView.setText(getString(R.string.no_calendars_found)); // Setting the name of the first calendar in the list
             }
         }
 

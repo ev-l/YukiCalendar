@@ -4,4 +4,6 @@
     <string name="button_send">Send</string>
     <string name="second_activity">This is second activity</string>
     <string name="edit_message">Enter the event</string>
+    <string name="get_started">Get Started</string>
+    <string name="calendar_subtext">Your smart calendar ;)</string>
 </resources>
