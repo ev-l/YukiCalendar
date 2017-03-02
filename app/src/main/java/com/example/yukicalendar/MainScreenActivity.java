@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.example.yukicalendar.model.UserCalendar;
 import com.example.yukicalendar.tasks.GetAccountCalendars;
@@ -24,10 +26,13 @@ public class MainScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         GetAccountCalendars.OnAccountCalendarResponseListener {
 
+    ArrayAdapter<CharSequence> adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -113,6 +118,10 @@ public class MainScreenActivity extends AppCompatActivity
     public void onAccountCalendarResponse(Map<String, List<UserCalendar>> accountCalendarMap) {
         Log.d("Calendars", accountCalendarMap.size() + "");
     }
+
+    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+    View header = navigationView.getHeaderView(0);
+    Spinner text = (Spinner) header.findViewById(R.id.account_list_spinner);
 
     private void fetchAllCalendar() {
         GetAccountCalendars getAccountCalendars = new GetAccountCalendars(this);
