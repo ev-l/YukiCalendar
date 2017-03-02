@@ -21,12 +21,14 @@ import com.example.yukicalendar.tasks.GetAccountCalendars;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class MainScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         GetAccountCalendars.OnAccountCalendarResponseListener {
 
-    ArrayAdapter<CharSequence> adapter;
+
+    private Spinner accountSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,9 @@ public class MainScreenActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.getHeaderView(0);
+        accountSpinner = (Spinner) header.findViewById(R.id.account_list_spinner);
 
         fetchAllCalendar();
     }
@@ -116,12 +121,15 @@ public class MainScreenActivity extends AppCompatActivity
 
     @Override
     public void onAccountCalendarResponse(Map<String, List<UserCalendar>> accountCalendarMap) {
-        Log.d("Calendars", accountCalendarMap.size() + "");
+        if (accountCalendarMap != null && !accountCalendarMap.isEmpty()) {
+            Set<String> accountNames = accountCalendarMap.keySet(); // This returns a set
+            // converting to array..
+            String[] accountArray = accountNames.toArray(new String[accountNames.size()]);
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, accountArray);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            accountSpinner.setAdapter(dataAdapter);
+        }
     }
-
-    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-    View header = navigationView.getHeaderView(0);
-    Spinner text = (Spinner) header.findViewById(R.id.account_list_spinner);
 
     private void fetchAllCalendar() {
         GetAccountCalendars getAccountCalendars = new GetAccountCalendars(this);
