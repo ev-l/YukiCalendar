@@ -2,10 +2,9 @@ package com.example.yukicalendar;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.os.UserManagerCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,6 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -25,10 +27,13 @@ import java.util.Set;
 
 public class MainScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        GetAccountCalendars.OnAccountCalendarResponseListener {
+        GetAccountCalendars.OnAccountCalendarResponseListener, AdapterView.OnItemSelectedListener {
 
 
     private Spinner accountSpinner;
+    private NavigationView navigationView;
+
+    private Map<String, List<UserCalendar>> accountCalendarMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +58,12 @@ public class MainScreenActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         View header = navigationView.getHeaderView(0);
         accountSpinner = (Spinner) header.findViewById(R.id.account_list_spinner);
+        accountSpinner.setOnItemSelectedListener(this);
 
         fetchAllCalendar();
     }
@@ -121,6 +127,7 @@ public class MainScreenActivity extends AppCompatActivity
 
     @Override
     public void onAccountCalendarResponse(Map<String, List<UserCalendar>> accountCalendarMap) {
+        this.accountCalendarMap = accountCalendarMap;
         if (accountCalendarMap != null && !accountCalendarMap.isEmpty()) {
             Set<String> accountNames = accountCalendarMap.keySet(); // This returns a set
             // converting to array..
@@ -135,5 +142,30 @@ public class MainScreenActivity extends AppCompatActivity
         GetAccountCalendars getAccountCalendars = new GetAccountCalendars(this);
         getAccountCalendars.setOnAccountCalendarResponseListener(this);
         getAccountCalendars.execute();
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String account = (String) adapterView.getItemAtPosition(i);
+
+        // Get calendars for account
+        List<UserCalendar> calendars = accountCalendarMap.get(account);
+
+        Menu m = navigationView.getMenu();
+        m.clear(); // clear the exiting menu
+        SubMenu topChannelMenu = m.addSubMenu("Calendars");
+        if (calendars != null) {
+            for (UserCalendar cal: calendars) {
+                topChannelMenu.add(cal.getDisplayName());
+            }
+
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

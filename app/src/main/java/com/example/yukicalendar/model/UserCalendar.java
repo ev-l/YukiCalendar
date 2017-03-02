@@ -17,4 +17,21 @@ public class UserCalendar {
         this.accountName = accountName;
         this.ownerName = ownerName;
     }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public long getCalID() {
+        return calID;
+    }
+
 }
