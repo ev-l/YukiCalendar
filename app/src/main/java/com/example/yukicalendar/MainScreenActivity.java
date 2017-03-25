@@ -21,7 +21,7 @@ import android.widget.Spinner;
 import com.example.yukicalendar.model.CalendarEvent;
 import com.example.yukicalendar.model.UserCalendar;
 import com.example.yukicalendar.tasks.GetAccountCalendars;
-import com.example.yukicalendar.tasks.GetCalendarEvents;
+import com.example.yukicalendar.tasks.GetEventsForCalendarTask;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +30,7 @@ import java.util.Set;
 public class MainScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         GetAccountCalendars.OnAccountCalendarResponseListener,
-        GetCalendarEvents.OnCalendarEventsResponseListener, AdapterView.OnItemSelectedListener {
+        GetEventsForCalendarTask.OnCalendarEventsResponseListener, AdapterView.OnItemSelectedListener {
 
 
     private Spinner accountSpinner;
@@ -109,7 +109,7 @@ public class MainScreenActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int calendarId = item.getItemId();
         Log.d("haha", "Item clicked:" + calendarId);
-        GetCalendarEvents calendarEventsTask = new GetCalendarEvents(this, calendarId);
+        GetEventsForCalendarTask calendarEventsTask = new GetEventsForCalendarTask(this, calendarId);
         calendarEventsTask.setOnCalendarEventsResponseListener(this);
         calendarEventsTask.execute();
 

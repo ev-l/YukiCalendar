@@ -16,7 +16,7 @@ import java.util.List;
  * @author p-v
  */
 
-public class GetCalendarEvents extends AsyncTask<Void, Void, List<CalendarEvent>> {
+public class GetEventsForCalendarTask extends AsyncTask<Void, Void, List<CalendarEvent>> {
 
     public final String[] EVENT_PROJECTION = new String[] {
             CalendarContract.Events._ID,                           // 0
@@ -38,7 +38,7 @@ public class GetCalendarEvents extends AsyncTask<Void, Void, List<CalendarEvent>
     private long calendarId;
     private OnCalendarEventsResponseListener onCalendarEventsResponseListener;
 
-    public GetCalendarEvents(Context context, long calendarId) {
+    public GetEventsForCalendarTask(Context context, long calendarId) {
         this.context = context;
         this.calendarId = calendarId;
     }
