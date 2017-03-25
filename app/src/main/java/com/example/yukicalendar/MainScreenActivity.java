@@ -4,12 +4,12 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.os.UserManagerCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -18,8 +18,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.example.yukicalendar.model.CalendarEvent;
 import com.example.yukicalendar.model.UserCalendar;
 import com.example.yukicalendar.tasks.GetAccountCalendars;
+import com.example.yukicalendar.tasks.GetCalendarEvents;
 
 import java.util.List;
 import java.util.Map;
@@ -27,7 +29,8 @@ import java.util.Set;
 
 public class MainScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        GetAccountCalendars.OnAccountCalendarResponseListener, AdapterView.OnItemSelectedListener {
+        GetAccountCalendars.OnAccountCalendarResponseListener,
+        GetCalendarEvents.OnCalendarEventsResponseListener, AdapterView.OnItemSelectedListener {
 
 
     private Spinner accountSpinner;
@@ -104,21 +107,11 @@ public class MainScreenActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
+        int calendarId = item.getItemId();
+        Log.d("haha", "Item clicked:" + calendarId);
+        GetCalendarEvents calendarEventsTask = new GetCalendarEvents(this, calendarId);
+        calendarEventsTask.setOnCalendarEventsResponseListener(this);
+        calendarEventsTask.execute();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -157,7 +150,8 @@ public class MainScreenActivity extends AppCompatActivity
         SubMenu topChannelMenu = m.addSubMenu("Calendars");
         if (calendars != null) {
             for (UserCalendar cal: calendars) {
-                topChannelMenu.add(cal.getDisplayName());
+                topChannelMenu.add((int)cal.getCalID(),
+                        (int)cal.getCalID(), Menu.NONE, cal.getDisplayName());
             }
 
         }
@@ -167,5 +161,16 @@ public class MainScreenActivity extends AppCompatActivity
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    @Override
+    public void onCalendarEventsResponse(List<CalendarEvent> calendarEvents) {
+        if (calendarEvents != null && !calendarEvents.isEmpty()) {
+            for (CalendarEvent event : calendarEvents) {
+                Log.d("Event Title", event.getTitle());
+            }
+        } else {
+            Log.d("Event Title", "No events");
+        }
     }
 }

@@ -52,17 +52,20 @@ public class GetAccountCalendars extends AsyncTask<Void, Void, Map<String, List<
         Map<String, List<UserCalendar>> accountCalendarMap = new HashMap<>();
         // Submit the query and get a Cursor object back.
         Cursor cur = cr.query(uri, EVENT_PROJECTION, null, null, null);
-        while (cur.moveToNext()) {
-            // Get the field values
-            long calID = cur.getLong(PROJECTION_ID_INDEX);
-            String displayName = cur.getString(PROJECTION_DISPLAY_NAME_INDEX);
-            String accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
-            String ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
-            UserCalendar userCalendar = new UserCalendar(calID, displayName, accountName, ownerName);
-            if (!accountCalendarMap.containsKey(accountName)) {
-                accountCalendarMap.put(accountName, new ArrayList<UserCalendar>());
+        if (cur != null) {
+            while (cur.moveToNext()) {
+                // Get the field values
+                long calID = cur.getLong(PROJECTION_ID_INDEX);
+                String displayName = cur.getString(PROJECTION_DISPLAY_NAME_INDEX);
+                String accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
+                String ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
+                UserCalendar userCalendar = new UserCalendar(calID, displayName, accountName, ownerName);
+                if (!accountCalendarMap.containsKey(accountName)) {
+                    accountCalendarMap.put(accountName, new ArrayList<UserCalendar>());
+                }
+                accountCalendarMap.get(accountName).add(userCalendar);
             }
-            accountCalendarMap.get(accountName).add(userCalendar);
+            cur.close();
         }
         return accountCalendarMap;
     }
