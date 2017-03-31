@@ -20,15 +20,17 @@ public class GetEventsForCalendarTask extends AsyncTask<Void, Void, List<Calenda
 
     public final String[] EVENT_PROJECTION = new String[] {
             CalendarContract.Events._ID,                           // 0
+            CalendarContract.Events.CALENDAR_ID,                           // 0
             CalendarContract.Events.ACCOUNT_NAME,                  // 1
             CalendarContract.Events.CALENDAR_DISPLAY_NAME,         // 2
             CalendarContract.Events.TITLE // 3
     };
     // The indices for the projection array above.
     private static final int PROJECTION_ID_INDEX = 0;
-    private static final int PROJECTION_ACCOUNT_NAME_INDEX = 1;
-    private static final int PROJECTION_DISPLAY_NAME_INDEX = 2;
-    private static final int PROJECTION_TITLE_INDEX = 3;
+    private static final int PROJECTION_CALENDAR_ID_INDEX = 1;
+    private static final int PROJECTION_ACCOUNT_NAME_INDEX = 2;
+    private static final int PROJECTION_DISPLAY_NAME_INDEX = 3;
+    private static final int PROJECTION_TITLE_INDEX = 4;
 
     public interface OnCalendarEventsResponseListener {
         void onCalendarEventsResponse(List<CalendarEvent> calendarEvents);
@@ -53,11 +55,10 @@ public class GetEventsForCalendarTask extends AsyncTask<Void, Void, List<Calenda
         if (cur != null) {
             while (cur.moveToNext()) {
                 // Get the field values
-                long calID = cur.getLong(PROJECTION_ID_INDEX);
-                String displayName = cur.getString(PROJECTION_DISPLAY_NAME_INDEX);
-                String accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
+                long eventId = cur.getLong(PROJECTION_ID_INDEX);
+                long calendarId = cur.getLong(PROJECTION_CALENDAR_ID_INDEX);
                 String title = cur.getString(PROJECTION_TITLE_INDEX);
-                CalendarEvent event = new CalendarEvent(title);
+                CalendarEvent event = new CalendarEvent(eventId, calendarId, title);
                 calendarEvents.add(event);
             }
             cur.close();

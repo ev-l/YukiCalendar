@@ -167,7 +167,7 @@ public class MainScreenActivity extends AppCompatActivity
     public void onCalendarEventsResponse(List<CalendarEvent> calendarEvents) {
         if (calendarEvents != null && !calendarEvents.isEmpty()) {
             for (CalendarEvent event : calendarEvents) {
-                Log.d("Event Title", event.getTitle());
+                Log.d("Event Title", event.getTitle() + "");
             }
         } else {
             Log.d("Event Title", "No events");

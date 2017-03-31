@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 
 import com.example.yukicalendar.model.UserCalendar;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -63,4 +64,8 @@ public class GetCalendarEvents extends AsyncTask<Void, Void, Map<String, List<Us
         }
 
 
+    @Override
+    protected Map<String, List<UserCalendar>> doInBackground(Void... params) {
+        return null;
+    }
 }
