@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.CalendarContract;
 
+import com.example.yukicalendar.model.UserAccount;
 import com.example.yukicalendar.model.UserCalendar;
 
 import java.util.ArrayList;
@@ -18,10 +19,10 @@ import java.util.Map;
  * @author p-v
  */
 
-public class GetAccountCalendars extends AsyncTask<Void, Void, Map<String, List<UserCalendar>>> {
+public class GetAccountCalendars extends AsyncTask<Void, Void, Map<UserAccount, List<UserCalendar>>> {
 
     public interface OnAccountCalendarResponseListener {
-        void onAccountCalendarResponse(Map<String, List<UserCalendar>> accountCalendarMap);
+        void onAccountCalendarResponse(Map<UserAccount, List<UserCalendar>> accountCalendarMap);
     }
 
     public final String[] EVENT_PROJECTION = new String[] {
@@ -45,11 +46,11 @@ public class GetAccountCalendars extends AsyncTask<Void, Void, Map<String, List<
     }
 
     @Override
-    protected Map<String, List<UserCalendar>> doInBackground(Void... voids) {
+    protected Map<UserAccount, List<UserCalendar>> doInBackground(Void... voids) {
         ContentResolver cr = context.getApplicationContext().getContentResolver();
         Uri uri = CalendarContract.Calendars.CONTENT_URI;
 
-        Map<String, List<UserCalendar>> accountCalendarMap = new HashMap<>();
+        Map<UserAccount, List<UserCalendar>> accountCalendarMap = new HashMap<>();
         // Submit the query and get a Cursor object back.
         Cursor cur = cr.query(uri, EVENT_PROJECTION, null, null, null);
         if (cur != null) {
@@ -60,10 +61,11 @@ public class GetAccountCalendars extends AsyncTask<Void, Void, Map<String, List<
                 String accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
                 String ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
                 UserCalendar userCalendar = new UserCalendar(calID, displayName, accountName, ownerName);
-                if (!accountCalendarMap.containsKey(accountName)) {
-                    accountCalendarMap.put(accountName, new ArrayList<UserCalendar>());
+                UserAccount userAccount = new UserAccount(accountName);
+                if (!accountCalendarMap.containsKey(userAccount)) {
+                    accountCalendarMap.put(userAccount, new ArrayList<UserCalendar>());
                 }
-                accountCalendarMap.get(accountName).add(userCalendar);
+                accountCalendarMap.get(userAccount).add(userCalendar);
             }
             cur.close();
         }
@@ -71,7 +73,7 @@ public class GetAccountCalendars extends AsyncTask<Void, Void, Map<String, List<
     }
 
     @Override
-    protected void onPostExecute(Map<String, List<UserCalendar>> accountCalendarMap) {
+    protected void onPostExecute(Map<UserAccount, List<UserCalendar>> accountCalendarMap) {
         if (onAccountCalendarResponseListener != null) {
             onAccountCalendarResponseListener.onAccountCalendarResponse(accountCalendarMap);
         }

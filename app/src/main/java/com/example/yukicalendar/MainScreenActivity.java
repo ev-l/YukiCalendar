@@ -22,6 +22,7 @@ import android.widget.Spinner;
 
 import com.example.yukicalendar.adapter.EventsAdapter;
 import com.example.yukicalendar.model.CalendarEvent;
+import com.example.yukicalendar.model.UserAccount;
 import com.example.yukicalendar.model.UserCalendar;
 import com.example.yukicalendar.tasks.GetAccountCalendars;
 import com.example.yukicalendar.tasks.GetEventsForCalendarTask;
@@ -39,7 +40,7 @@ public class MainScreenActivity extends AppCompatActivity
     private Spinner accountSpinner;
     private NavigationView navigationView;
 
-    private Map<String, List<UserCalendar>> accountCalendarMap;
+    private Map<UserAccount, List<UserCalendar>> accountCalendarMap;
     private RecyclerView eventsRecyclerView;
     private EventsAdapter eventAdapter;
     private View emptyEventsView;
@@ -132,12 +133,16 @@ public class MainScreenActivity extends AppCompatActivity
     }
 
     @Override
-    public void onAccountCalendarResponse(Map<String, List<UserCalendar>> accountCalendarMap) {
+    public void onAccountCalendarResponse(Map<UserAccount, List<UserCalendar>> accountCalendarMap) {
         this.accountCalendarMap = accountCalendarMap;
         if (accountCalendarMap != null && !accountCalendarMap.isEmpty()) {
-            Set<String> accountNames = accountCalendarMap.keySet(); // This returns a set
+            Set<UserAccount> accounts = accountCalendarMap.keySet(); // This returns a set
+            String[] accountArray = new String[accounts.size()];
+            int i = 0;
             // converting to array..
-            String[] accountArray = accountNames.toArray(new String[accountNames.size()]);
+            for (UserAccount account : accounts) {
+                accountArray[i++] = account.getAccountName();
+            }
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, accountArray);
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             accountSpinner.setAdapter(dataAdapter);
@@ -156,7 +161,7 @@ public class MainScreenActivity extends AppCompatActivity
         String account = (String) adapterView.getItemAtPosition(i);
 
         // Get calendars for account
-        List<UserCalendar> calendars = accountCalendarMap.get(account);
+        List<UserCalendar> calendars = accountCalendarMap.get(new UserAccount(account));
 
         Menu m = navigationView.getMenu();
         m.clear(); // clear the exiting menu
