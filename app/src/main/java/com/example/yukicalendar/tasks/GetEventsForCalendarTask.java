@@ -20,17 +20,13 @@ public class GetEventsForCalendarTask extends AsyncTask<Void, Void, List<Calenda
 
     public final String[] EVENT_PROJECTION = new String[] {
             CalendarContract.Events._ID,                           // 0
-            CalendarContract.Events.CALENDAR_ID,                           // 0
-            CalendarContract.Events.ACCOUNT_NAME,                  // 1
-            CalendarContract.Events.CALENDAR_DISPLAY_NAME,         // 2
-            CalendarContract.Events.TITLE // 3
+            CalendarContract.Events.CALENDAR_ID,                   // 1
+            CalendarContract.Events.TITLE                          // 2
     };
     // The indices for the projection array above.
     private static final int PROJECTION_ID_INDEX = 0;
     private static final int PROJECTION_CALENDAR_ID_INDEX = 1;
-    private static final int PROJECTION_ACCOUNT_NAME_INDEX = 2;
-    private static final int PROJECTION_DISPLAY_NAME_INDEX = 3;
-    private static final int PROJECTION_TITLE_INDEX = 4;
+    private static final int PROJECTION_TITLE_INDEX = 2;
 
     public interface OnCalendarEventsResponseListener {
         void onCalendarEventsResponse(List<CalendarEvent> calendarEvents);

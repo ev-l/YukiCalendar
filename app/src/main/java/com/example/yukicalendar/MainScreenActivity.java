@@ -8,6 +8,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.example.yukicalendar.adapter.EventsAdapter;
 import com.example.yukicalendar.model.CalendarEvent;
 import com.example.yukicalendar.model.UserCalendar;
 import com.example.yukicalendar.tasks.GetAccountCalendars;
@@ -37,6 +40,9 @@ public class MainScreenActivity extends AppCompatActivity
     private NavigationView navigationView;
 
     private Map<String, List<UserCalendar>> accountCalendarMap;
+    private RecyclerView eventsRecyclerView;
+    private EventsAdapter eventAdapter;
+    private View emptyEventsView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +74,13 @@ public class MainScreenActivity extends AppCompatActivity
         accountSpinner = (Spinner) header.findViewById(R.id.account_list_spinner);
         accountSpinner.setOnItemSelectedListener(this);
 
+        eventsRecyclerView = (RecyclerView) findViewById(R.id.events_recycler_view);
+        emptyEventsView = findViewById(R.id.no_events_view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        eventsRecyclerView.setLayoutManager(layoutManager);
+        eventAdapter = new EventsAdapter();
+        eventsRecyclerView.setAdapter(eventAdapter);
         fetchAllCalendar();
     }
 
@@ -153,7 +166,6 @@ public class MainScreenActivity extends AppCompatActivity
                 topChannelMenu.add((int)cal.getCalID(),
                         (int)cal.getCalID(), Menu.NONE, cal.getDisplayName());
             }
-
         }
 
     }
@@ -166,11 +178,12 @@ public class MainScreenActivity extends AppCompatActivity
     @Override
     public void onCalendarEventsResponse(List<CalendarEvent> calendarEvents) {
         if (calendarEvents != null && !calendarEvents.isEmpty()) {
-            for (CalendarEvent event : calendarEvents) {
-                Log.d("Event Title", event.getTitle() + "");
-            }
+            eventAdapter.setCalendarEventList(calendarEvents);
+            eventsRecyclerView.setVisibility(View.VISIBLE);
+            emptyEventsView.setVisibility(View.GONE);
         } else {
-            Log.d("Event Title", "No events");
+            emptyEventsView.setVisibility(View.VISIBLE);
+            eventsRecyclerView.setVisibility(View.GONE);
         }
     }
 }
