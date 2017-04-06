@@ -14,4 +14,7 @@
     <string name="action_settings">Settings</string>
     <string name="no_events_found">No events found</string>
     <string name="no_title">(No title)</string>
+
+    <string name="create_event_title">Create event</string>
+    <string name="event_place_holder">Meeting tomorrow at 8pm</string>
 </resources>

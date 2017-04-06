@@ -24,7 +24,10 @@
         <activity
             android:name=".MainScreenActivity"
             android:label="@string/title_activity_main_screen"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:label="@string/create_event_title"
+            android:name=".EventCreationActivity" />
     </application>
 
 </manifest>
