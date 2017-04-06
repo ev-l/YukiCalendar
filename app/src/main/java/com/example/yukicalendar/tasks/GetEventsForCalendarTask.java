@@ -21,12 +21,18 @@ public class GetEventsForCalendarTask extends AsyncTask<Void, Void, List<Calenda
     public final String[] EVENT_PROJECTION = new String[] {
             CalendarContract.Events._ID,                           // 0
             CalendarContract.Events.CALENDAR_ID,                   // 1
-            CalendarContract.Events.TITLE                          // 2
+            CalendarContract.Events.TITLE,                         // 2
+            CalendarContract.Events.DTSTART,
+            CalendarContract.Events.DTEND,
+            CalendarContract.Events.ALL_DAY,
     };
     // The indices for the projection array above.
     private static final int PROJECTION_ID_INDEX = 0;
     private static final int PROJECTION_CALENDAR_ID_INDEX = 1;
     private static final int PROJECTION_TITLE_INDEX = 2;
+    private static final int PROJECTION_DTSTART_INDEX = 3;
+    private static final int PROJECTION_DTEND_INDEX = 4;
+    private static final int PROJECTION_ALLDAY = 5;
 
     public interface OnCalendarEventsResponseListener {
         void onCalendarEventsResponse(List<CalendarEvent> calendarEvents);
@@ -54,7 +60,10 @@ public class GetEventsForCalendarTask extends AsyncTask<Void, Void, List<Calenda
                 long eventId = cur.getLong(PROJECTION_ID_INDEX);
                 long calendarId = cur.getLong(PROJECTION_CALENDAR_ID_INDEX);
                 String title = cur.getString(PROJECTION_TITLE_INDEX);
-                CalendarEvent event = new CalendarEvent(eventId, calendarId, title);
+                long dtStart = cur.getLong(PROJECTION_DTSTART_INDEX);
+                long dtEnd = cur.getLong(PROJECTION_DTEND_INDEX);
+                int allDay = cur.getInt(PROJECTION_ALLDAY);
+                CalendarEvent event = new CalendarEvent(eventId, calendarId, title, dtStart, dtEnd, allDay == 1);
                 calendarEvents.add(event);
             }
             cur.close();

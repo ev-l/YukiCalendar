@@ -23,7 +23,7 @@
         <activity android:name=".DisplayMessageActivity" />
         <activity
             android:name=".MainScreenActivity"
-            android:label="@string/title_activity_main_screen"
+            android:label="@string/month_title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:label="@string/create_event_title"

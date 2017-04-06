@@ -1,5 +1,6 @@
 package com.example.yukicalendar.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -9,8 +10,11 @@ import android.widget.TextView;
 
 import com.example.yukicalendar.R;
 import com.example.yukicalendar.model.CalendarEvent;
+import com.example.yukicalendar.utils.CalendarUtils;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author p-v
@@ -29,10 +33,26 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        Context context = holder.eventTitleView.getContext();
         CalendarEvent calendarEvent = calendarEventList.get(position);
         String title = calendarEvent.getTitle();
         String noTitle = holder.eventTitleView.getContext().getString(R.string.no_title);
         holder.eventTitleView.setText(TextUtils.isEmpty(title) ? noTitle : title);
+
+        Calendar startTimeCal = Calendar.getInstance();
+        startTimeCal.setTimeInMillis(calendarEvent.getStartTime());
+        // Event duration
+        String startTime = CalendarUtils.getDisplayTime(
+                context, startTimeCal, Locale.getDefault());
+        String endTime = CalendarUtils.getDisplayTime(
+                context, calendarEvent.getEndTime(), Locale.getDefault());
+
+        String eventDuration = startTime + " - " + endTime;
+        holder.eventDurationView.setText(eventDuration);
+
+        holder.eventDom.setText(String.valueOf(CalendarUtils.getDayOfMonth(startTimeCal)));
+        holder.eventDow.setText(CalendarUtils.getDayOfWeek(startTimeCal));
+
     }
 
     @Override
@@ -47,9 +67,15 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView eventTitleView;
+        TextView eventDurationView;
+        TextView eventDow; // Day of week
+        TextView eventDom; // Day of month
         ViewHolder(View itemView) {
             super(itemView);
             eventTitleView = (TextView) itemView.findViewById(R.id.event_title);
+            eventDurationView = (TextView) itemView.findViewById(R.id.event_duration);
+            eventDom = (TextView) itemView.findViewById(R.id.event_dom);
+            eventDow = (TextView) itemView.findViewById(R.id.event_dow);
         }
     }
 }
