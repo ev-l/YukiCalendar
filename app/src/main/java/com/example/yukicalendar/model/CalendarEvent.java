@@ -1,5 +1,8 @@
 package com.example.yukicalendar.model;
 
+import android.content.ContentValues;
+import android.provider.CalendarContract;
+
 /**
  * @author p-v
  */
@@ -20,6 +23,18 @@ public class CalendarEvent {
         this.startTime = startTime;
         this.endTime = endTime;
         this.isAllDay = isAllDay;
+    }
+
+    public ContentValues getContentValues() {
+        ContentValues values = new ContentValues();
+        values.put(CalendarContract.Events.DTSTART, this.startTime);
+        values.put(CalendarContract.Events.DTEND, this.endTime);
+        values.put(CalendarContract.Events.TITLE, this.title);
+//        values.put(CalendarContract.Events.DESCRIPTION, "Group workout");
+        values.put(CalendarContract.Events.CALENDAR_ID, this.calendarId);
+//        values.put(CalendarContract.Events.EVENT_TIMEZONE, "America/Los_Angeles");
+        return values;
+
     }
 
     public String getTitle() {
