@@ -18,4 +18,8 @@
     <string name="create_event_title">Create event</string>
     <string name="event_place_holder">Meeting tomorrow at 8pm</string>
     <string name="month_title">Month will come here</string>
+
+    <string name="add_event_text">Add event</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
 </resources>

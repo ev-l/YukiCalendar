@@ -6,9 +6,23 @@
     android:layout_height="match_parent"
     tools:context="com.example.yukicalendar.EventCreationActivity">
 
-    <EditText
-        android:hint="@string/event_place_holder"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/user_input_view"
+            android:hint="@string/event_place_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/add_event_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_event_text"/>
+    </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>
