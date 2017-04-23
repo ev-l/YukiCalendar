@@ -3,6 +3,8 @@ package com.example.yukicalendar.model;
 import android.content.ContentValues;
 import android.provider.CalendarContract;
 
+import java.util.TimeZone;
+
 /**
  * @author p-v
  */
@@ -25,6 +27,10 @@ public class CalendarEvent {
         this.isAllDay = isAllDay;
     }
 
+    public CalendarEvent(long calendarId, String title, long startTime, long endTime, boolean isAllDay) {
+        this(-1, calendarId, title, startTime, endTime, isAllDay);
+    }
+
     public ContentValues getContentValues() {
         ContentValues values = new ContentValues();
         values.put(CalendarContract.Events.DTSTART, this.startTime);
@@ -32,9 +38,13 @@ public class CalendarEvent {
         values.put(CalendarContract.Events.TITLE, this.title);
 //        values.put(CalendarContract.Events.DESCRIPTION, "Group workout");
         values.put(CalendarContract.Events.CALENDAR_ID, this.calendarId);
-//        values.put(CalendarContract.Events.EVENT_TIMEZONE, "America/Los_Angeles");
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
         return values;
 
+    }
+
+    public void setCalendarId(long calendarId) {
+        this.calendarId = calendarId;
     }
 
     public String getTitle() {

@@ -8,21 +8,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.yukicalendar.model.CalendarEvent;
+import com.example.yukicalendar.tasks.CreateCalendarEvent;
 import com.example.yukicalendar.yukiparser.Config;
 import com.example.yukicalendar.yukiparser.parser.SeerParserInitializer;
-import com.example.yukicalendar.yukiparser.parser.SuggestionValue;
-import com.example.yukicalendar.yukiparser.parser.model.ParsedEvent;
 
 public class EventCreationActivity extends AppCompatActivity implements View.OnClickListener {
+
+    public static final String CALENDAR_ID = "CALENDAR_ID";
 
     private Button addEventButton;
     private EditText userInputView;
     private SeerParserInitializer eventParser;
+    private long calendarId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_creation);
+
+        calendarId = getIntent().getIntExtra(CALENDAR_ID, 0);
 
         Config config = new Config.ConfigBuilder()
                 .setTimeFormat12HoursWithMins("h:mm a")
@@ -47,9 +52,13 @@ public class EventCreationActivity extends AppCompatActivity implements View.OnC
             Toast.makeText(this, "Please input some text", Toast.LENGTH_SHORT).show();
         } else {
             // Send text to parser
-            ParsedEvent value = eventParser.parseInput(userInput);
+            CalendarEvent value = eventParser.parseInput(userInput);
+
             if (value != null) {
-                Toast.makeText(this, value.getDtStart().getTime().toString(), Toast.LENGTH_SHORT).show();
+                value.setCalendarId(this.calendarId);
+                CreateCalendarEvent createCalendarEvent = new CreateCalendarEvent(getContentResolver(), value);
+                createCalendarEvent.createEvent();
+                Toast.makeText(this, "Event added", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Nothing parsed", Toast.LENGTH_SHORT).show();
             }

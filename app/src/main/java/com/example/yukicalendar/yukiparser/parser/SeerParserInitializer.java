@@ -2,6 +2,7 @@ package com.example.yukicalendar.yukiparser.parser;
 
 import android.content.Context;
 
+import com.example.yukicalendar.model.CalendarEvent;
 import com.example.yukicalendar.yukiparser.Config;
 import com.example.yukicalendar.yukiparser.SuggestionRow;
 import com.example.yukicalendar.yukiparser.parser.handler.SuggestionHandler;
@@ -86,7 +87,7 @@ public class SeerParserInitializer {
         dateSuggestionBuilder.setNextBuilder(dowSuggestionBuilder);
     }
 
-    public ParsedEvent parseInput(String input) {
+    public CalendarEvent parseInput(String input) {
 
         // Stores information about the user input
         SuggestionValue suggestionValue = new SuggestionValue();
@@ -105,8 +106,11 @@ public class SeerParserInitializer {
             int timestamp = suggestionList.get(0).getValue();
             if (timestamp > 0) {
                 ParsedEvent event = new ParsedEvent();
+                event.setTitle(input);
                 event.setDtStart(timestamp * 1000L);
-                return event;
+                long millisecondsInAnHour = 60 * 60 * 1000L;
+                event.setDtEnd(timestamp * 1000L + millisecondsInAnHour);
+                return event.toCalendarEvent();
             }
         }
 

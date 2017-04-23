@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.yukicalendar.adapter.EventsAdapter;
 import com.example.yukicalendar.model.CalendarEvent;
@@ -45,6 +45,7 @@ public class MainScreenActivity extends AppCompatActivity
     private RecyclerView eventsRecyclerView;
     private EventsAdapter eventAdapter;
     private View emptyEventsView;
+    private int selectedCalendarId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +59,13 @@ public class MainScreenActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainScreenActivity.this, EventCreationActivity.class);
-                startActivity(intent);
+                if (selectedCalendarId == 0) {
+                    Toast.makeText(MainScreenActivity.this, "Please select a calendar", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(MainScreenActivity.this, EventCreationActivity.class);
+                    intent.putExtra(EventCreationActivity.CALENDAR_ID, selectedCalendarId);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -123,6 +129,7 @@ public class MainScreenActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int calendarId = item.getItemId();
+        this.selectedCalendarId = calendarId;
         Log.d("haha", "Item clicked:" + calendarId);
         GetEventsForCalendarTask calendarEventsTask = new GetEventsForCalendarTask(this, calendarId);
         calendarEventsTask.setOnCalendarEventsResponseListener(this);
