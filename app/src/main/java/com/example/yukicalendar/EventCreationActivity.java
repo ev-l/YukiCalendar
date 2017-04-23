@@ -13,7 +13,7 @@ import com.example.yukicalendar.tasks.CreateCalendarEvent;
 import com.example.yukicalendar.yukiparser.Config;
 import com.example.yukicalendar.yukiparser.parser.SeerParserInitializer;
 
-public class EventCreationActivity extends AppCompatActivity implements View.OnClickListener {
+public class EventCreationActivity extends AppCompatActivity implements View.OnClickListener, CreateCalendarEvent.OnEventCreateListener {
 
     public static final String CALENDAR_ID = "CALENDAR_ID";
 
@@ -57,6 +57,7 @@ public class EventCreationActivity extends AppCompatActivity implements View.OnC
             if (value != null) {
                 value.setCalendarId(this.calendarId);
                 CreateCalendarEvent createCalendarEvent = new CreateCalendarEvent(getContentResolver(), value);
+                createCalendarEvent.setOnEventCreateListener(EventCreationActivity.this);
                 createCalendarEvent.createEvent();
                 Toast.makeText(this, "Event added", Toast.LENGTH_SHORT).show();
             } else {
@@ -64,5 +65,11 @@ public class EventCreationActivity extends AppCompatActivity implements View.OnC
             }
         }
 
+    }
+
+    @Override
+    public void onEventCreated() {
+        // Close the activity after event creation
+        finish();
     }
 }

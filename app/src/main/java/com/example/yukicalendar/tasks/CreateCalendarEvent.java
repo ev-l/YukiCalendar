@@ -17,7 +17,13 @@ import java.util.Calendar;
 
 public class CreateCalendarEvent extends AsyncQueryHandler {
 
+
+    public interface OnEventCreateListener {
+        void onEventCreated();
+    }
+
     private CalendarEvent event;
+    private OnEventCreateListener onEventCreateListener;
 
     public CreateCalendarEvent(ContentResolver cr, CalendarEvent event) {
         super(cr);
@@ -39,5 +45,12 @@ public class CreateCalendarEvent extends AsyncQueryHandler {
         super.onInsertComplete(token, cookie, uri);
         // get the event ID that is the last element in the Uri
         long eventID = Long.parseLong(uri.getLastPathSegment());
+        if (onEventCreateListener != null) {
+            onEventCreateListener.onEventCreated();
+        }
+    }
+
+    public void setOnEventCreateListener(OnEventCreateListener onEventCreateListener) {
+        this.onEventCreateListener = onEventCreateListener;
     }
 }
