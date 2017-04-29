@@ -9,12 +9,6 @@ import android.provider.CalendarContract;
 
 import com.example.yukicalendar.model.CalendarEvent;
 
-import java.util.Calendar;
-
-/**
- * @author p-v
- */
-
 public class CreateCalendarEvent extends AsyncQueryHandler {
 
 

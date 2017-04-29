@@ -5,10 +5,6 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-/**
- * @author p-v
- */
-
 public class EventTextWatcher implements TextWatcher {
 
     private static final int EVENT_TEXT_CHANGE = 0;

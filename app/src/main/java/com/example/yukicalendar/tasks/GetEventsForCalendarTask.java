@@ -6,15 +6,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.CalendarContract;
+import android.text.TextUtils;
 
 import com.example.yukicalendar.model.CalendarEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * @author p-v
- */
 
 public class GetEventsForCalendarTask extends AsyncTask<Void, Void, List<CalendarEvent>> {
 
@@ -25,6 +22,9 @@ public class GetEventsForCalendarTask extends AsyncTask<Void, Void, List<Calenda
             CalendarContract.Events.DTSTART,
             CalendarContract.Events.DTEND,
             CalendarContract.Events.ALL_DAY,
+            CalendarContract.Events.CALENDAR_COLOR,
+            CalendarContract.Events.EVENT_COLOR,
+
     };
     // The indices for the projection array above.
     private static final int PROJECTION_ID_INDEX = 0;
@@ -33,6 +33,8 @@ public class GetEventsForCalendarTask extends AsyncTask<Void, Void, List<Calenda
     private static final int PROJECTION_DTSTART_INDEX = 3;
     private static final int PROJECTION_DTEND_INDEX = 4;
     private static final int PROJECTION_ALLDAY = 5;
+    private static final int PROJECTION_CALENDAR_COLOR_INDEX = 6;
+    private static final int PROJECTION_EVENT_COLOR_INDEX = 7;
 
     public interface OnCalendarEventsResponseListener {
         void onCalendarEventsResponse(List<CalendarEvent> calendarEvents);
@@ -63,7 +65,13 @@ public class GetEventsForCalendarTask extends AsyncTask<Void, Void, List<Calenda
                 long dtStart = cur.getLong(PROJECTION_DTSTART_INDEX);
                 long dtEnd = cur.getLong(PROJECTION_DTEND_INDEX);
                 int allDay = cur.getInt(PROJECTION_ALLDAY);
-                CalendarEvent event = new CalendarEvent(eventId, calendarId, title, dtStart, dtEnd, allDay == 1);
+                String eventColor = cur.getString(PROJECTION_EVENT_COLOR_INDEX);
+                if (TextUtils.isEmpty(eventColor))
+                {
+                    eventColor = cur.getString(PROJECTION_CALENDAR_COLOR_INDEX);
+
+                }
+                CalendarEvent event = new CalendarEvent(eventId, calendarId, title, dtStart, dtEnd, allDay == 1, eventColor );
                 calendarEvents.add(event);
             }
             cur.close();

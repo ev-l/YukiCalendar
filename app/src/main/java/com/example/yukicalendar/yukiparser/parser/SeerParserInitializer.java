@@ -17,9 +17,6 @@ import com.example.yukicalendar.yukiparser.parser.model.ParsedEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author p-v
- */
 
 public class SeerParserInitializer {
 

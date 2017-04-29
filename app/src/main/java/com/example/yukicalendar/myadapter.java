@@ -9,10 +9,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by esther on 16/02/17.
- */
-
 public class myadapter extends RecyclerView.Adapter<myadapter.ViewHolder>{
 
     private List<ListItem> listItems;
@@ -56,6 +52,4 @@ public class myadapter extends RecyclerView.Adapter<myadapter.ViewHolder>{
             textViewDesc = (TextView) itemView.findViewById(R.id.textViewDesc);
         }
     }
-
-
 }

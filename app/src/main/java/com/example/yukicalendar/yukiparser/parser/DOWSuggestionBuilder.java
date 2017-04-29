@@ -16,7 +16,6 @@ import java.util.List;
  * Handles strings such as, next friday, fri, tuesday<br/>
  * Also handles partial strings such as tues, thus
  *
- * @author p-v
  */
 class DOWSuggestionBuilder extends SuggestionBuilder {
 

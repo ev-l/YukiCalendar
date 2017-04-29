@@ -9,10 +9,6 @@ import com.example.yukicalendar.yukiparser.parser.model.RelativeDayItem;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author p-v
- */
-
 public class RelativeTimeSuggestionHandler_EN extends SuggestionHandler {
 
     private static final String REGEX = "\\b(?:(tod(?:a(?:y)?)?)|(tom(?:o(?:r(?:r(?:o(?:w)?)?)?)?)?)" +

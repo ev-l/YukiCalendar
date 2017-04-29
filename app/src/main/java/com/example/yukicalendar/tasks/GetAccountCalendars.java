@@ -15,10 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author p-v
- */
-
 public class GetAccountCalendars extends AsyncTask<Void, Void, Map<UserAccount, List<UserCalendar>>> {
 
     public interface OnAccountCalendarResponseListener {

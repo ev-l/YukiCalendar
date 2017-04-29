@@ -12,10 +12,6 @@ import com.example.yukicalendar.yukiparser.parser.model.TimeItem;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author p-v
- */
-
 public class TimeSuggestionHandler_EN extends SuggestionHandler {
 
     private static final String TIME_RGX = "\\b((?:2[0-3])|(?:1\\d)|(?:0?\\d))(?:(?::|\\s?)((?:0?\\d)|(?:[0-5][0-9]?)))?\\s{0,2}([ap](?:\\.?m\\.?)?)?\\b";

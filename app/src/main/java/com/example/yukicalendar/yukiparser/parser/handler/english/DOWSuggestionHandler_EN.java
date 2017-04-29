@@ -9,10 +9,6 @@ import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author p-v
- */
-
 public class DOWSuggestionHandler_EN extends SuggestionHandler {
 
     private static final String DAY_OF_WEEK = "(next\\s{0,2})?(?:\\b(?:(?:(mon)|(fri)|(sun))(?:d(?:ay?)?)?)|\\b(tue(?:s(?:d(?:ay?)?)?)?)|\\b(wed(?:n(?:e(?:s(?:d(?:ay?)?)?)?)?)?)|\\b(thu(?:r(?:s(?:d(?:ay?)?)?)?)?)|\\b(sat(?:u(?:r(?:d(?:ay?)?)?)?)?))\\b";

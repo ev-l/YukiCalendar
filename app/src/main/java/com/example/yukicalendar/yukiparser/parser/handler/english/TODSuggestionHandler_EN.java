@@ -14,9 +14,6 @@ import static com.example.yukicalendar.yukiparser.parser.helper.Constants.TOD_EV
 import static com.example.yukicalendar.yukiparser.parser.helper.Constants.TOD_MORNING;
 import static com.example.yukicalendar.yukiparser.parser.helper.Constants.TOD_NIGHT;
 
-/**
- * @author p-v
- */
 
 public class TODSuggestionHandler_EN extends SuggestionHandler {
 

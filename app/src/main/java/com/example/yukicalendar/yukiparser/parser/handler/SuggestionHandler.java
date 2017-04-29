@@ -8,10 +8,6 @@ import com.example.yukicalendar.yukiparser.parser.SuggestionValue;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/**
- * @author p-v
- */
-
 public abstract class SuggestionHandler {
 
 

@@ -1,8 +1,5 @@
 package com.example.yukicalendar;
 
-/**
- * Created by esther on 16/02/17.
- */
 
 public class ListItem {
 

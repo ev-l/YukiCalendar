@@ -14,7 +14,6 @@ import java.util.List;
  * Suggestion handler for handling time information.<br/>
  * Handles strings like 6:30, 6 40, 3pm etc.
  *
- * @author p-v
  */
 class TimeSuggestionBuilder extends SuggestionBuilder {
 

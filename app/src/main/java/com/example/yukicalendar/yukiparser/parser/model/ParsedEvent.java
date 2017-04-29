@@ -44,6 +44,6 @@ public class ParsedEvent {
     }
 
     public CalendarEvent toCalendarEvent() {
-        return new CalendarEvent(-1, calendarId, title, dtStart.getTimeInMillis(), dtEnd.getTimeInMillis(), false);
+        return new CalendarEvent(-1, calendarId, title, dtStart.getTimeInMillis(), dtEnd.getTimeInMillis(), false, null);
     }
 }

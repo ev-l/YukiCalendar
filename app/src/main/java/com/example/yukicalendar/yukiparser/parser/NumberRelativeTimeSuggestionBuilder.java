@@ -20,7 +20,6 @@ import java.util.List;
  * 10 days<br/>
  * after 2 months<br/>
  *
- * @author p-v
  */
 class NumberRelativeTimeSuggestionBuilder extends SuggestionBuilder {
 

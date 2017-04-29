@@ -7,10 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-/**
- * @author p-v
- */
-
 public class CalendarUtils {
 
     public static String getDisplayTime(Context context, Calendar cal, Locale locale) {

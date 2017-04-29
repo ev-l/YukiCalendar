@@ -13,10 +13,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by esther on 05/03/17.
- */
-
 public class GetCalendarEvents extends AsyncTask<Void, Void, Map<String, List<UserCalendar>>> {
 
 

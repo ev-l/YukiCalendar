@@ -9,10 +9,6 @@ import com.example.yukicalendar.yukiparser.parser.model.RelativeDayNumItem;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author p-v
- */
-
 public class NumberRelativeTimeSuggestionHandler_EN extends SuggestionHandler {
 
     private static final String REGEX = "\\\\b(?:(?:(?:(?:after\\\\s{1,2})?(\\\\d\\\\d?)\\\\s{0,2})|next\\\\s{1,2})(?:(month?)|(m(?:i(?:n(?:u(?:te?)?)?)?)?)|(we(?:ek?))|(d(?:ay?))|(hr|h(?:o(?:ur?)?)?))s?)\\\\b";

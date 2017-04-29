@@ -1,8 +1,5 @@
 package com.example.yukicalendar.model;
 
-/**
- * @author p-v
- */
 
 public class UserAccount {
 

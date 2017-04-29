@@ -29,7 +29,6 @@ import static com.example.yukicalendar.yukiparser.parser.helper.Constants.TOD_NI
  *
  * The module is based on COR design pattern
  *
- * @author p-v
  */
 abstract class SuggestionBuilder {
 

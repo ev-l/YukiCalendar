@@ -10,7 +10,6 @@ import com.example.yukicalendar.yukiparser.parser.model.TimeItem;
 /**
  * Values regarding the user input
  *
- * @author p-v
  */
 public class SuggestionValue extends SparseArrayCompat<SuggestionValue.LocalItemItem> {
 

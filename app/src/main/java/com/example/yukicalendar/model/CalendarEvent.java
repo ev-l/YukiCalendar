@@ -5,10 +5,6 @@ import android.provider.CalendarContract;
 
 import java.util.TimeZone;
 
-/**
- * @author p-v
- */
-
 public class CalendarEvent {
 
     private String title;
@@ -17,18 +13,21 @@ public class CalendarEvent {
     private long startTime;
     private long endTime;
     private boolean isAllDay;
+    private String eventColor;
 
-    public CalendarEvent(long eventId, long calendarId, String title, long startTime, long endTime, boolean isAllDay) {
+
+    public CalendarEvent(long eventId, long calendarId, String title, long startTime, long endTime, boolean isAllDay, String eventColor) {
         this.eventId = eventId;
         this.calendarId = calendarId;
         this.title = title;
         this.startTime = startTime;
         this.endTime = endTime;
         this.isAllDay = isAllDay;
+        this.eventColor = eventColor;
     }
 
     public CalendarEvent(long calendarId, String title, long startTime, long endTime, boolean isAllDay) {
-        this(-1, calendarId, title, startTime, endTime, isAllDay);
+        this(-1, calendarId, title, startTime, endTime, isAllDay, null);
     }
 
     public ContentValues getContentValues() {
@@ -39,6 +38,7 @@ public class CalendarEvent {
 //        values.put(CalendarContract.Events.DESCRIPTION, "Group workout");
         values.put(CalendarContract.Events.CALENDAR_ID, this.calendarId);
         values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+        values.put(CalendarContract.Events.EVENT_COLOR, this.eventColor);
         return values;
 
     }
@@ -70,4 +70,6 @@ public class CalendarEvent {
     public boolean isAllDay() {
         return isAllDay;
     }
+
+    public String getEventColor() {return this.eventColor; }
 }

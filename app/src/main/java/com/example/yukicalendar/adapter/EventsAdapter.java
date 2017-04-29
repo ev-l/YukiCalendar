@@ -1,6 +1,7 @@
 package com.example.yukicalendar.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -46,13 +47,12 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 context, startTimeCal, Locale.getDefault());
         String endTime = CalendarUtils.getDisplayTime(
                 context, calendarEvent.getEndTime(), Locale.getDefault());
-
         String eventDuration = startTime + " - " + endTime;
         holder.eventDurationView.setText(eventDuration);
 
         holder.eventDom.setText(String.valueOf(CalendarUtils.getDayOfMonth(startTimeCal)));
         holder.eventDow.setText(CalendarUtils.getDayOfWeek(startTimeCal));
-
+        holder.itemView.setBackgroundColor(Color.parseColor(calendarEvent.getEventColor()));
     }
 
     @Override

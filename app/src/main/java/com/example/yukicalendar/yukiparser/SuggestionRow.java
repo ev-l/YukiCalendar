@@ -1,7 +1,6 @@
 package com.example.yukicalendar.yukiparser;
 
 /**
- * @author p-v
  */
 
 public class SuggestionRow {

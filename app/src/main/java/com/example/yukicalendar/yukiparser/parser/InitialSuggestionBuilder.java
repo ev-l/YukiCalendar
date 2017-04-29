@@ -14,7 +14,6 @@ import java.util.List;
  * Initial suggestion handler used for suggesting values and ignoring other handlers
  * if its able to handle the input
  *
- * @author p-v
  */
 class InitialSuggestionBuilder extends SuggestionBuilder {
 

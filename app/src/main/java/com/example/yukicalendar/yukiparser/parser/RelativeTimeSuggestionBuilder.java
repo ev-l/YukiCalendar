@@ -12,9 +12,6 @@ import com.example.yukicalendar.yukiparser.parser.model.TimeItem;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- * @author p-v
- */
 class RelativeTimeSuggestionBuilder extends SuggestionBuilder {
 
     RelativeTimeSuggestionBuilder(Config config) {

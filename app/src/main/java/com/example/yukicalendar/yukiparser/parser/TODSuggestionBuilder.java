@@ -12,7 +12,6 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * @author p-v
  */
 class TODSuggestionBuilder extends SuggestionBuilder {
 
