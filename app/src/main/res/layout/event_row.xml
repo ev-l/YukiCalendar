@@ -28,6 +28,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/event_row"
         android:background="@color/event_background"
         android:layout_toRightOf="@id/event_day"
         android:paddingTop="10dp"

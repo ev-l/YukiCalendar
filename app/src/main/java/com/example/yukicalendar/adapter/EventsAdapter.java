@@ -52,7 +52,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
         holder.eventDom.setText(String.valueOf(CalendarUtils.getDayOfMonth(startTimeCal)));
         holder.eventDow.setText(CalendarUtils.getDayOfWeek(startTimeCal));
-        holder.itemView.setBackgroundColor(Color.parseColor(calendarEvent.getEventColor()));
+        holder.eventRow.setBackgroundColor(Integer.parseInt(calendarEvent.getEventColor()));
     }
 
     @Override
@@ -70,12 +70,14 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         TextView eventDurationView;
         TextView eventDow; // Day of week
         TextView eventDom; // Day of month
+        View eventRow;
         ViewHolder(View itemView) {
             super(itemView);
             eventTitleView = (TextView) itemView.findViewById(R.id.event_title);
             eventDurationView = (TextView) itemView.findViewById(R.id.event_duration);
             eventDom = (TextView) itemView.findViewById(R.id.event_dom);
             eventDow = (TextView) itemView.findViewById(R.id.event_dow);
+            eventRow = itemView.findViewById(R.id.event_row);
         }
     }
 }

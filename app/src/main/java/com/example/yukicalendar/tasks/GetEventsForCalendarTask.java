@@ -66,10 +66,8 @@ public class GetEventsForCalendarTask extends AsyncTask<Void, Void, List<Calenda
                 long dtEnd = cur.getLong(PROJECTION_DTEND_INDEX);
                 int allDay = cur.getInt(PROJECTION_ALLDAY);
                 String eventColor = cur.getString(PROJECTION_EVENT_COLOR_INDEX);
-                if (TextUtils.isEmpty(eventColor))
-                {
+                if (TextUtils.isEmpty(eventColor)) {
                     eventColor = cur.getString(PROJECTION_CALENDAR_COLOR_INDEX);
-
                 }
                 CalendarEvent event = new CalendarEvent(eventId, calendarId, title, dtStart, dtEnd, allDay == 1, eventColor );
                 calendarEvents.add(event);
