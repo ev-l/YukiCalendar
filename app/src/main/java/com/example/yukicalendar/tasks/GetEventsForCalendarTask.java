@@ -55,13 +55,9 @@ public class GetEventsForCalendarTask extends AsyncTask<Void, Void, List<Calenda
         Uri uri = CalendarContract.Events.CONTENT_URI;
         String[] selectionArgs = {String.valueOf(this.calendarId)};
         Cursor cur;
-        if (calendarId !=-1)
-        {
+        if (calendarId == -1) {
             cur = cr.query(uri, EVENT_PROJECTION, null, null, null);
-
-        }
-        else
-        {
+        } else {
             cur = cr.query(uri, EVENT_PROJECTION, CalendarContract.Events.CALENDAR_ID + "=?", selectionArgs, null);
         }
         List<CalendarEvent> calendarEvents = new ArrayList<>();
