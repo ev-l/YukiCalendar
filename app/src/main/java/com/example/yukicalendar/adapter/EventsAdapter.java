@@ -1,7 +1,6 @@
 package com.example.yukicalendar.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,6 +13,8 @@ import com.example.yukicalendar.model.CalendarEvent;
 import com.example.yukicalendar.utils.CalendarUtils;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,12 +56,46 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         holder.eventRow.setBackgroundColor(Integer.parseInt(calendarEvent.getEventColor()));
     }
 
+    public CalendarEvent getEventAtPosition(int position) {
+        if (position >= 0 && position < calendarEventList.size()) {
+            return calendarEventList.get(position);
+        }
+        return null;
+    }
+
+    public int getPositionOfFirstUpcomingEvent() {
+        if (calendarEventList != null && calendarEventList.size() > 0) {
+            int pos = calendarEventList.size() - 1;
+
+            long currentTimeInMillis = System.currentTimeMillis();
+            int i = pos;
+            for (; i >= 0; i--) {
+                CalendarEvent event = calendarEventList.get(i);
+                if (currentTimeInMillis > event.getStartTime()) {
+                    break;
+                }
+            }
+            if (i == pos) {
+                return pos;
+            }
+            return i + 1;
+        }
+        return -1;
+    }
+
+
     @Override
     public int getItemCount() {
         return calendarEventList == null ? 0 : calendarEventList.size();
     }
 
     public void setCalendarEventList(List<CalendarEvent> calendarEventList) {
+        Collections.sort(calendarEventList, new Comparator<CalendarEvent>() {
+            @Override
+            public int compare(CalendarEvent o1, CalendarEvent o2) {
+                return ((int)(o1.getStartTime()/1000) - (int)(o2.getStartTime()/1000));
+            }
+        });
         this.calendarEventList = calendarEventList;
         this.notifyDataSetChanged();
     }

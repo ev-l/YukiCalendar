@@ -49,4 +49,16 @@ public class CalendarUtils {
         DateFormat df = new SimpleDateFormat(format, locale);
         return df.format(cal.getTime()).toLowerCase();
     }
+
+    public static String getDisplayMonth(long timestamp) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(timestamp);
+
+        Calendar currentCal = Calendar.getInstance();
+
+        if (currentCal.get(Calendar.YEAR) == cal.get(Calendar.YEAR)) {
+            return cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+        }
+        return cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) + " " + cal.get(Calendar.YEAR);
+    }
 }

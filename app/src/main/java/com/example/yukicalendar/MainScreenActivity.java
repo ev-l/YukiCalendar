@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +28,9 @@ import com.example.yukicalendar.model.UserAccount;
 import com.example.yukicalendar.model.UserCalendar;
 import com.example.yukicalendar.tasks.GetAccountCalendars;
 import com.example.yukicalendar.tasks.GetEventsForCalendarTask;
+import com.example.yukicalendar.utils.CalendarUtils;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,6 +39,7 @@ public class MainScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         GetAccountCalendars.OnAccountCalendarResponseListener,
         GetEventsForCalendarTask.OnCalendarEventsResponseListener, AdapterView.OnItemSelectedListener {
+
 
 
     private Spinner accountSpinner;
@@ -52,7 +56,9 @@ public class MainScreenActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final ActionBar actionBar = getSupportActionBar();
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -84,11 +90,29 @@ public class MainScreenActivity extends AppCompatActivity
 
         eventsRecyclerView = (RecyclerView) findViewById(R.id.events_recycler_view);
         emptyEventsView = findViewById(R.id.no_events_view);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         eventsRecyclerView.setLayoutManager(layoutManager);
         eventAdapter = new EventsAdapter();
         eventsRecyclerView.setAdapter(eventAdapter);
+        eventsRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            private CalendarEvent prevEvent;
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int pos = layoutManager.findFirstVisibleItemPosition();
+                CalendarEvent event = eventAdapter.getEventAtPosition(pos);
+                if (prevEvent != event) {
+                    toolbar.setTitle(CalendarUtils.getDisplayMonth(event.getStartTime()));
+                }
+                prevEvent = event;
+            }
+        });
         fetchAllCalendar();
         GetEventsForCalendarTask calendarEventsTask = new GetEventsForCalendarTask(this, -1);
         calendarEventsTask.setOnCalendarEventsResponseListener(this);
@@ -194,6 +218,10 @@ public class MainScreenActivity extends AppCompatActivity
     public void onCalendarEventsResponse(List<CalendarEvent> calendarEvents) {
         if (calendarEvents != null && !calendarEvents.isEmpty()) {
             eventAdapter.setCalendarEventList(calendarEvents);
+            int position = eventAdapter.getPositionOfFirstUpcomingEvent();
+            if (position != -1) {
+                eventsRecyclerView.scrollToPosition(position);
+            }
             eventsRecyclerView.setVisibility(View.VISIBLE);
             emptyEventsView.setVisibility(View.GONE);
         } else {
@@ -201,4 +229,5 @@ public class MainScreenActivity extends AppCompatActivity
             eventsRecyclerView.setVisibility(View.GONE);
         }
     }
+
 }
