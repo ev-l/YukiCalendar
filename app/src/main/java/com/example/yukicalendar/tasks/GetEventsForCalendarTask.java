@@ -54,7 +54,16 @@ public class GetEventsForCalendarTask extends AsyncTask<Void, Void, List<Calenda
         ContentResolver cr = context.getApplicationContext().getContentResolver();
         Uri uri = CalendarContract.Events.CONTENT_URI;
         String[] selectionArgs = {String.valueOf(this.calendarId)};
-        Cursor cur = cr.query(uri, EVENT_PROJECTION, CalendarContract.Events.CALENDAR_ID + "=?", selectionArgs, null);
+        Cursor cur;
+        if (calendarId !=-1)
+        {
+            cur = cr.query(uri, EVENT_PROJECTION, null, null, null);
+
+        }
+        else
+        {
+            cur = cr.query(uri, EVENT_PROJECTION, CalendarContract.Events.CALENDAR_ID + "=?", selectionArgs, null);
+        }
         List<CalendarEvent> calendarEvents = new ArrayList<>();
         if (cur != null) {
             while (cur.moveToNext()) {
@@ -76,15 +85,12 @@ public class GetEventsForCalendarTask extends AsyncTask<Void, Void, List<Calenda
         }
         return calendarEvents;
     }
-
     @Override
     protected void onPostExecute(List<CalendarEvent> calendarEvents) {
         if (onCalendarEventsResponseListener != null) {
             onCalendarEventsResponseListener.onCalendarEventsResponse(calendarEvents);
         }
     }
-
-
     public void setOnCalendarEventsResponseListener(OnCalendarEventsResponseListener onCalendarEventsResponseListener) {
         this.onCalendarEventsResponseListener = onCalendarEventsResponseListener;
     }

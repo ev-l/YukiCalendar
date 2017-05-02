@@ -90,6 +90,10 @@ public class MainScreenActivity extends AppCompatActivity
         eventAdapter = new EventsAdapter();
         eventsRecyclerView.setAdapter(eventAdapter);
         fetchAllCalendar();
+        GetEventsForCalendarTask calendarEventsTask = new GetEventsForCalendarTask(this, -1);
+        calendarEventsTask.setOnCalendarEventsResponseListener(this);
+        calendarEventsTask.execute();
+
     }
 
     @Override
@@ -180,12 +184,10 @@ public class MainScreenActivity extends AppCompatActivity
                         (int)cal.getCalID(), Menu.NONE, cal.getDisplayName());
             }
         }
-
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 
     @Override
