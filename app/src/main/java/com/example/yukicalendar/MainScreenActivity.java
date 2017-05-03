@@ -49,7 +49,7 @@ public class MainScreenActivity extends AppCompatActivity
     private RecyclerView eventsRecyclerView;
     private EventsAdapter eventAdapter;
     private View emptyEventsView;
-    private int selectedCalendarId;
+    private int selectedCalendarId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,10 +114,7 @@ public class MainScreenActivity extends AppCompatActivity
             }
         });
         fetchAllCalendar();
-        GetEventsForCalendarTask calendarEventsTask = new GetEventsForCalendarTask(this, -1);
-        calendarEventsTask.setOnCalendarEventsResponseListener(this);
-        calendarEventsTask.execute();
-
+        fetchCalendarEvents(-1);
     }
 
     @Override
@@ -158,11 +155,7 @@ public class MainScreenActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int calendarId = item.getItemId();
         this.selectedCalendarId = calendarId;
-        Log.d("haha", "Item clicked:" + calendarId);
-        GetEventsForCalendarTask calendarEventsTask = new GetEventsForCalendarTask(this, calendarId);
-        calendarEventsTask.setOnCalendarEventsResponseListener(this);
-        calendarEventsTask.execute();
-
+        fetchCalendarEvents(calendarId);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -185,6 +178,12 @@ public class MainScreenActivity extends AppCompatActivity
         }
     }
 
+    private void fetchCalendarEvents(int calendarId) {
+        GetEventsForCalendarTask calendarEventsTask = new GetEventsForCalendarTask(this, calendarId);
+        calendarEventsTask.setOnCalendarEventsResponseListener(this);
+        calendarEventsTask.execute();
+    }
+
     private void fetchAllCalendar() {
         GetAccountCalendars getAccountCalendars = new GetAccountCalendars(this);
         getAccountCalendars.setOnAccountCalendarResponseListener(this);
@@ -201,6 +200,9 @@ public class MainScreenActivity extends AppCompatActivity
 
         Menu m = navigationView.getMenu();
         m.clear(); // clear the exiting menu
+
+        m.add(-1, -1, Menu.NONE, "All Events");
+
         SubMenu topChannelMenu = m.addSubMenu("Calendars");
         if (calendars != null) {
             for (UserCalendar cal: calendars) {
