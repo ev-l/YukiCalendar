@@ -10,26 +10,46 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.yukicalendar.MainActivity">
 
-    <TextView
-        android:layout_marginTop="40dp"
-        android:gravity="center_horizontal"
-        android:textSize="30sp"
-        android:id="@+id/calendar_name"
-        android:text="@string/app_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-
-    <TextView
-        android:layout_marginTop="40dp"
-        android:gravity="center_horizontal"
-        android:layout_below="@id/calendar_name"
-        android:textSize="18sp"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/app_image"
+        android:layout_marginTop="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/calendar_subtext"/>
+        android:src="@drawable/ic_date_range"/>
 
     <RelativeLayout
+        android:layout_marginTop="80dp"
+        android:layout_below="@id/app_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:gravity="center_horizontal"
+            android:textSize="35sp"
+            android:id="@+id/calendar_name"
+            android:text="@string/app_name"
+            android:textColor="@color/title_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:id="@+id/calendar_subtext"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:layout_below="@id/calendar_name"
+            android:textColor="@color/title_color"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/calendar_subtext"/>
+
+
+    </RelativeLayout>
+
+
+<!--    <RelativeLayout
         android:background="@color/colorAccent"
         android:padding="20dp"
         android:id="@+id/send_button"
@@ -49,6 +69,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-    </RelativeLayout>
+    </RelativeLayout>-->
 
 </RelativeLayout>

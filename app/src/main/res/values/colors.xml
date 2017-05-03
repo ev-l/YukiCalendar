@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
     <color name="event_background">#057C52</color>
+    <color name="title_color">#222539</color>
 </resources>

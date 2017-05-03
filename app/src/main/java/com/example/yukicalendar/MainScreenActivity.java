@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -30,7 +29,6 @@ import com.example.yukicalendar.tasks.GetAccountCalendars;
 import com.example.yukicalendar.tasks.GetEventsForCalendarTask;
 import com.example.yukicalendar.utils.CalendarUtils;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -123,7 +121,7 @@ public class MainScreenActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            finish();
         }
     }
 
