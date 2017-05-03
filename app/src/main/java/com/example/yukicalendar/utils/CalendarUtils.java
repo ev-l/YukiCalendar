@@ -61,4 +61,14 @@ public class CalendarUtils {
         }
         return cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) + " " + cal.get(Calendar.YEAR);
     }
+
+    public static boolean isSameDate(long firstItem, long secondItem) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTimeInMillis(firstItem);
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTimeInMillis(secondItem);
+
+        return cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
+    }
 }

@@ -51,6 +51,17 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         String eventDuration = startTime + " - " + endTime;
         holder.eventDurationView.setText(eventDuration);
 
+        if (position > 0) {
+            CalendarEvent prevEvent = calendarEventList.get(position - 1);
+            if (CalendarUtils.isSameDate(calendarEvent.getStartTime(), prevEvent.getStartTime())) {
+                holder.eventDayView.setVisibility(View.INVISIBLE);
+            } else {
+                holder.eventDayView.setVisibility(View.VISIBLE);
+            }
+        } else {
+            holder.eventDayView.setVisibility(View.VISIBLE);
+        }
+
         holder.eventDom.setText(String.valueOf(CalendarUtils.getDayOfMonth(startTimeCal)));
         holder.eventDow.setText(CalendarUtils.getDayOfWeek(startTimeCal));
         holder.eventRow.setBackgroundColor(Integer.parseInt(calendarEvent.getEventColor()));
@@ -106,8 +117,10 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         TextView eventDow; // Day of week
         TextView eventDom; // Day of month
         View eventRow;
+        View eventDayView;
         ViewHolder(View itemView) {
             super(itemView);
+            eventDayView = itemView.findViewById(R.id.event_day);
             eventTitleView = (TextView) itemView.findViewById(R.id.event_title);
             eventDurationView = (TextView) itemView.findViewById(R.id.event_duration);
             eventDom = (TextView) itemView.findViewById(R.id.event_dom);
