@@ -58,7 +58,7 @@ public class TimeSuggestionHandler_EN extends SuggestionHandler {
             }
             int minsInDay = hourOfDay * 60 + mins;
 
-            suggestionValue.appendSuggestion(SuggestionValue.TIME, new TimeItem(minsInDay, amPm != null));
+            suggestionValue.appendSuggestion(SuggestionValue.TIME, new TimeItem(minsInDay, amPm != null, matcher.start(), matcher.end()));
         }
 
         super.handle(context, input, suggestionValue);

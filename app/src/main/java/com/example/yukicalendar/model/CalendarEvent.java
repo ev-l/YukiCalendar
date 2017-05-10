@@ -14,7 +14,18 @@ public class CalendarEvent {
     private long endTime;
     private boolean isAllDay;
     private String eventColor;
+    private String location;
 
+    public CalendarEvent(long eventId, long calendarId, String title, long startTime, long endTime, boolean isAllDay, String eventColor, String location) {
+        this.eventId = eventId;
+        this.calendarId = calendarId;
+        this.title = title;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.isAllDay = isAllDay;
+        this.eventColor = eventColor;
+        this.location = location;
+    }
 
     public CalendarEvent(long eventId, long calendarId, String title, long startTime, long endTime, boolean isAllDay, String eventColor) {
         this.eventId = eventId;
@@ -39,6 +50,7 @@ public class CalendarEvent {
         values.put(CalendarContract.Events.CALENDAR_ID, this.calendarId);
         values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
         values.put(CalendarContract.Events.EVENT_COLOR, this.eventColor);
+        values.put(CalendarContract.Events.EVENT_LOCATION, this.location);
         return values;
 
     }

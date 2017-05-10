@@ -11,8 +11,8 @@ public class TimeItem extends SuggestionValue.LocalItemItem {
 
     public boolean isAmPmPresent;
 
-    public TimeItem(int value, boolean amPmPresent) {
-        super(value);
+    public TimeItem(int value, boolean amPmPresent, int startIdx, int endIdx) {
+        super(value, startIdx, endIdx);
         this.isAmPmPresent = amPmPresent;
     }
 }

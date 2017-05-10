@@ -59,9 +59,17 @@ public class SuggestionValue extends SparseArrayCompat<SuggestionValue.LocalItem
     public static class LocalItemItem {
 
         public int value;
+        public int startIdx;
+        public int endIdx;
 
         public LocalItemItem(int value) {
             this.value = value;
+        }
+
+        public LocalItemItem(int value, int startIdx, int endIdx) {
+            this.value = value;
+            this.startIdx = startIdx;
+            this.endIdx = endIdx;
         }
 
     }

@@ -63,7 +63,7 @@ public class MainScreenActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (selectedCalendarId == 0) {
+                if (selectedCalendarId == -1) {
                     Toast.makeText(MainScreenActivity.this, "Please select a calendar", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(MainScreenActivity.this, EventCreationActivity.class);

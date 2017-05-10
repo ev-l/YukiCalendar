@@ -38,7 +38,7 @@ public class TODSuggestionHandler_EN extends SuggestionHandler {
             } else {
                 value = TOD_NIGHT;
             }
-            suggestionValue.appendSuggestion(SuggestionValue.TIME_OF_DAY, value);
+            suggestionValue.appendSuggestion(SuggestionValue.TIME_OF_DAY, new SuggestionValue.LocalItemItem(value, matcher.start(), matcher.end()));
         }
         super.handle(context, input, suggestionValue);
     }

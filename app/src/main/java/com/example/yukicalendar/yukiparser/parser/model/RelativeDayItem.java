@@ -11,8 +11,8 @@ public class RelativeDayItem extends SuggestionValue.LocalItemItem {
 
     public boolean isPartial;
 
-    public RelativeDayItem(int value, boolean isPartial) {
-        super(value);
+    public RelativeDayItem(int value, boolean isPartial, int startIdx, int endIdx) {
+        super(value, startIdx, endIdx);
         this.isPartial = isPartial;
     }
 }

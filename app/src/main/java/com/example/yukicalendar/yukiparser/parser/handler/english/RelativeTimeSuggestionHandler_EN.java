@@ -26,14 +26,14 @@ public class RelativeTimeSuggestionHandler_EN extends SuggestionHandler {
         if (m.find()) {
             if ((text = m.group(1)) != null) {
                 suggestionValue.appendSuggestion(SuggestionValue.RELATIVE_DAY,
-                        new RelativeDayItem(0, !"today".equalsIgnoreCase(text.trim())));
+                        new RelativeDayItem(0, !"today".equalsIgnoreCase(text.trim()), m.start(), m.end()));
             } else if ((text = m.group(2)) != null) {
                 suggestionValue.appendSuggestion(SuggestionValue.RELATIVE_DAY,
-                        new RelativeDayItem(1, !"tomorrow".equalsIgnoreCase(text.trim())));
+                        new RelativeDayItem(1, !"tomorrow".equalsIgnoreCase(text.trim()), m.start(), m.end()));
             } else if (m.group(3) != null){
-                suggestionValue.appendSuggestion(SuggestionValue.RELATIVE_DAY, new RelativeDayItem(2, false));
+                suggestionValue.appendSuggestion(SuggestionValue.RELATIVE_DAY, new RelativeDayItem(2, false, m.start(), m.end()));
             } else {
-                suggestionValue.appendSuggestion(SuggestionValue.RELATIVE_DAY, new RelativeDayItem(10, false));
+                suggestionValue.appendSuggestion(SuggestionValue.RELATIVE_DAY, new RelativeDayItem(10, false, m.start(), m.end()));
             }
         }
         super.handle(context, input, suggestionValue);

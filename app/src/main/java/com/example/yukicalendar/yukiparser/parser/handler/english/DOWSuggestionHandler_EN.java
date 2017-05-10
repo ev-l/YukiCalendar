@@ -47,9 +47,9 @@ public class DOWSuggestionHandler_EN extends SuggestionHandler {
             }
             if (value != -1) {
                 if (matcher.group(1) != null) {
-                    suggestionValue.appendSuggestion(SuggestionValue.DAY_OF_WEEK_NEXT, value);
+                    suggestionValue.appendSuggestion(SuggestionValue.DAY_OF_WEEK_NEXT, new SuggestionValue.LocalItemItem(value, matcher.start(), matcher.end()));
                 } else {
-                    suggestionValue.appendSuggestion(SuggestionValue.DAY_OF_WEEK, value);
+                    suggestionValue.appendSuggestion(SuggestionValue.DAY_OF_WEEK, new SuggestionValue.LocalItemItem(value, matcher.start(), matcher.end()));
                 }
             }
         }

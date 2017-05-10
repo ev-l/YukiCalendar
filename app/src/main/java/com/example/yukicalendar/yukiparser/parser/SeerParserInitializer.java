@@ -1,6 +1,7 @@
 package com.example.yukicalendar.yukiparser.parser;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.example.yukicalendar.model.CalendarEvent;
 import com.example.yukicalendar.yukiparser.Config;
@@ -8,6 +9,7 @@ import com.example.yukicalendar.yukiparser.SuggestionRow;
 import com.example.yukicalendar.yukiparser.parser.handler.SuggestionHandler;
 import com.example.yukicalendar.yukiparser.parser.handler.english.DOWSuggestionHandler_EN;
 import com.example.yukicalendar.yukiparser.parser.handler.english.DateSuggestionHandler_EN;
+import com.example.yukicalendar.yukiparser.parser.handler.english.LocationSuggestionHandler_EN;
 import com.example.yukicalendar.yukiparser.parser.handler.english.NumberRelativeTimeSuggestionHandler_EN;
 import com.example.yukicalendar.yukiparser.parser.handler.english.RelativeTimeSuggestionHandler_EN;
 import com.example.yukicalendar.yukiparser.parser.handler.english.TODSuggestionHandler_EN;
@@ -23,6 +25,7 @@ public class SeerParserInitializer {
     private final TimeSuggestionBuilder timeSuggestionBuilder;
     private Context context;
     SuggestionHandler numberRelativeTimeSuggestionHandler;
+    private LocationSuggestionHandler_EN locationSuggestionHandler;
 
     private void initializeHandlers(@Config.Language int language) {
         // handlers
@@ -41,6 +44,7 @@ public class SeerParserInitializer {
                 dowSuggestionHandler = new DOWSuggestionHandler_EN();
                 timeSuggestionHandler = new TimeSuggestionHandler_EN();
                 todSuggestionHandler = new TODSuggestionHandler_EN();
+                locationSuggestionHandler = new LocationSuggestionHandler_EN();
                 break;
 
             // TODO implement other languages here
@@ -61,12 +65,14 @@ public class SeerParserInitializer {
         dateSuggestionHandler.setNextHandler(dowSuggestionHandler);
         dowSuggestionHandler.setNextHandler(timeSuggestionHandler);
         timeSuggestionHandler.setNextHandler(todSuggestionHandler);
+        todSuggestionHandler.setNextHandler(locationSuggestionHandler);
     }
 
     public SeerParserInitializer(Context context, Config config) {
         this.context = context;
 
         initializeHandlers(config.getLanguage());
+
 
         // builders
         timeSuggestionBuilder = new TimeSuggestionBuilder(config);
@@ -102,11 +108,13 @@ public class SeerParserInitializer {
         if (suggestionList.size() > 0) {
             int timestamp = suggestionList.get(0).getValue();
             if (timestamp > 0) {
+                Toast.makeText(context, locationSuggestionHandler.getLocationString(), Toast.LENGTH_SHORT).show();
                 ParsedEvent event = new ParsedEvent();
                 event.setTitle(input);
                 event.setDtStart(timestamp * 1000L);
                 long millisecondsInAnHour = 60 * 60 * 1000L;
                 event.setDtEnd(timestamp * 1000L + millisecondsInAnHour);
+                event.setLocation(locationSuggestionHandler.getLocationString());
                 return event.toCalendarEvent();
             }
         }

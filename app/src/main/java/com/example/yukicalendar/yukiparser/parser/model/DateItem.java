@@ -13,7 +13,7 @@ public class DateItem extends SuggestionValue.LocalItemItem {
     public int endIdx;
 
     public DateItem(int value, int startIdx, int endIdx) {
-        super(value);
+        super(value, startIdx, endIdx);
         this.startIdx = startIdx;
         this.endIdx = endIdx;
     }

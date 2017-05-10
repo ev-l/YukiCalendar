@@ -20,7 +20,7 @@ public class RelativeDayNumItem extends SuggestionValue.LocalItemItem {
     public int endIdx;
 
     public RelativeDayNumItem(int value, int type, int startIdx, int endIdx) {
-        super(value);
+        super(value, startIdx, endIdx);
         this.type = type;
         this.startIdx = startIdx;
         this.endIdx = endIdx;

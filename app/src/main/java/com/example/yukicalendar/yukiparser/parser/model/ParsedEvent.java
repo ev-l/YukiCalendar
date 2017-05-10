@@ -14,6 +14,7 @@ public class ParsedEvent {
     private Calendar dtEnd;
     private long calendarId;
     private String title;
+    private String location;
 
     public void setDtStart(long dtStart) {
         Calendar cal = Calendar.getInstance();
@@ -31,6 +32,10 @@ public class ParsedEvent {
         this.dtEnd = cal;
     }
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public Calendar getDtEnd() {
         return dtEnd;
     }
@@ -44,6 +49,6 @@ public class ParsedEvent {
     }
 
     public CalendarEvent toCalendarEvent() {
-        return new CalendarEvent(-1, calendarId, title, dtStart.getTimeInMillis(), dtEnd.getTimeInMillis(), false, null);
+        return new CalendarEvent(-1, calendarId, title, dtStart.getTimeInMillis(), dtEnd.getTimeInMillis(), false, null, location);
     }
 }
